@@ -1,0 +1,67 @@
+
+// For those who want the bleeding edge
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'java'
+
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+version = "${mc_version}-${project_version}"
+group= package_group // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = project_name
+
+minecraft {
+    version = "${mc_version}-${forge_version}"
+    runDir = "run"
+    mappings = "snapshot_20160919"
+    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+}
+
+configurations {
+    compileIntoJar
+}
+
+jar {
+    from { configurations.compileIntoJar.collect { it.directory ? it : zipTree(it) } }
+}
+
+
+dependencies {
+    compile files('E:\\Minecraft\\mods\\offical\\1.10.2\\Pixelmon-1.10.2-5.0.0-Beta-9.jar')
+    compile('mysql:mysql-connector-java:5.1.16')
+    compileIntoJar('mysql:mysql-connector-java:5.1.16')
+}
+
+processResources
+{
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+        
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
