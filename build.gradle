@@ -42,8 +42,6 @@ jar {
 
 dependencies {
     compile files('E:\\Minecraft\\mods\\offical\\1.10.2\\Pixelmon-1.10.2-5.0.0-Beta-9.jar')
-    compile('mysql:mysql-connector-java:5.1.16')
-    compileIntoJar('mysql:mysql-connector-java:5.1.16')
 }
 
 processResources
