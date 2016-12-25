@@ -41,7 +41,7 @@ jar {
 
 
 dependencies {
-    compile files('E:\\Minecraft\\mods\\offical\\1.8.9\\Pixelmon-1.8.9-4.3.0-beta9-universal.jar')
+    compile files('E:\\Minecraft\\mods\\offical\\1.8.9\\Pixelmon-1.8.9-4.3.0-universal.jar')
 }
 
 processResources
