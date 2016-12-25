@@ -23,6 +23,12 @@ public class Main
     public void postInit(FMLPostInitializationEvent event) throws Exception
     {
         fix();
+        addInvDetection();
+    }
+
+    public static void addInvDetection()
+    {
+        MinecraftForge.EVENT_BUS.register(new InventoryDetectionTickHandler());
     }
 
     public static void fix() throws Exception
@@ -32,7 +38,8 @@ public class Main
         ConcurrentHashMap<Object, ArrayList<IEventListener>> listeners = (ConcurrentHashMap<Object, ArrayList<IEventListener>>) f.get(MinecraftForge.EVENT_BUS);
         for(Map.Entry<Object, ArrayList<IEventListener>> entry : listeners.entrySet())
         {
-            if (entry.getKey().getClass().equals(RequirementsChecker.class))
+            if (entry.getKey().getClass().equals(RequirementsChecker.class) ||
+                    entry.getKey().getClass().equals(com.pixelmonmod.pixelmon.client.gui.inventory.InventoryDetectionTickHandler.class))
             {
                 MinecraftForge.EVENT_BUS.unregister(entry.getKey());
                 Pixelmon.EVENT_BUS.unregister(entry.getKey());
